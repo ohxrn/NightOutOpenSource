@@ -26,7 +26,7 @@ const UserHome = () => {
         setFilteredComp(serverResponse.data.Companys);
       })
       .catch((err) => {
-        console.log("this is the error", err);
+        console.log("this is the errore", err);
       });
   }, []);
 
