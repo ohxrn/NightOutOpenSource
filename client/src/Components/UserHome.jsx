@@ -32,7 +32,7 @@ const UserHome = () => {
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
-      console.log("THIS WHERE U ARE", position.coords);
+      console.log("THIS WHERE U ARE FOOL", position.coords);
     });
   }, []);
 
