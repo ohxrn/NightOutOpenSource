@@ -15,6 +15,9 @@ const UserHome = () => {
   const [update, setUpdate] = useState([]);
   const [adapter, setAdapter] = useState();
 
+  //GEOTRACK CONTENT-----------------
+  const [longitude, setLongitude] = useState();
+  const [lattitude, setLatitude] = useState();
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/companys")
@@ -33,8 +36,37 @@ const UserHome = () => {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       console.log("THIS WHERE U ARE FOOL", position.coords);
+      setLongitude(position.coords.longitude);
+      setLatitude(position.coords.latitude);
     });
   }, []);
+
+  const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    const earthRadius = 3958.8; // Radius of the Earth in miles
+
+    // Convert latitude and longitude to radians
+    const lat1Rad = (lat1 * Math.PI) / 180;
+    const lon1Rad = (lon1 * Math.PI) / 180;
+    const lat2Rad = (lat2 * Math.PI) / 180;
+    const lon2Rad = (lon2 * Math.PI) / 180;
+
+    // Calculate the differences between coordinates
+    const latDiff = lat2Rad - lat1Rad;
+    const lonDiff = lon2Rad - lon1Rad;
+
+    // Use the Haversine formula to calculate the distance
+    const a =
+      Math.sin(latDiff / 2) ** 2 +
+      Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.sin(lonDiff / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = earthRadius * c;
+    let actualDistance = distance / 5240;
+    console.log("DIS DA DISTANCE,", actualDistance, "miles");
+
+    return distance; // Distance in miles
+  };
+
+  calculateDistance(longitude, 55, lattitude, 77);
 
   useEffect(() => {
     // we need to set up all of our event listeners
@@ -238,7 +270,7 @@ const UserHome = () => {
                       color: "limegreen",
                     }}
                   >
-                    {console.log("this is length", nextComp.length)}
+                    {/* {console.log("this is length", nextComp.length)} */}
                     <div>
                       <div style={{ display: "flex" }}>
                         {single.likes <= 0.6 * (adapter / nextComp.length) ? (
