@@ -13,24 +13,27 @@ const UserHome = () => {
   const [socket] = useState(() => io(":8000"));
   const [selected, setSelected] = useState([]);
   const [update, setUpdate] = useState([]);
-  const [final, setFinalComp] = useState([]);
-  const [battery, setBattery] = useState([]);
   const [adapter, setAdapter] = useState();
-  const arr = [];
 
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/companys")
       .then((serverResponse) => {
-        console.log(
-          "THIS IS WHAT WERE ARE GETTING BACK",
-          serverResponse.data.Companys
-        );
+        // console.log(
+        //   "THIS IS WHAT WERE ARE GETTING BACK",
+        //   serverResponse.data.Companys
+        // );
         setFilteredComp(serverResponse.data.Companys);
       })
       .catch((err) => {
         console.log("this is the error", err);
       });
+  }, []);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log("THIS WHERE U ARE", position.coords);
+    });
   }, []);
 
   useEffect(() => {
@@ -67,41 +70,6 @@ const UserHome = () => {
       e.likes = 0;
     }
 
-    // Calculate();
-    // function Calculate() {
-    //   console.log("this the mean", ADAPTER / nextComp.length);
-    //   console.log("this the like", e.likes);
-    //   if (e.likes < 0.6 * (ADAPTER / nextComp.length)) {
-    //     setBattery([1]);
-    //     return;
-    //   }
-    //   if (
-    //     e.likes < 0.8 * (ADAPTER / nextComp.length) &&
-    //     e.likes > 0.6 * (ADAPTER / nextComp.length)
-    //   ) {
-    //     setBattery([1, 1]);
-    //     return;
-    //   }
-    //   if (
-    //     e.likes < ADAPTER / nextComp.length &&
-    //     e.likes > 0.8 * (ADAPTER / nextComp.length)
-    //   ) {
-    //     setBattery([1, 1, 1]);
-    //     return;
-    //   }
-    //   if (
-    //     e.likes > 1.2 * (ADAPTER / nextComp.length) &&
-    //     e.likes < 1.4 * (ADAPTER / nextComp.length)
-    //   ) {
-    //     setBattery([1, 1, 1, 1]);
-    //     return;
-    //   }
-    //   if (e.likes > 1.3 * (ADAPTER / nextComp.length)) {
-    //     setBattery([1, 1, 1, 1, 1]);
-    //     return;
-    //   }
-    // }
-
     socket.emit(
       "theThrow",
       `user ${socket.id} just added ${e.businessName} to their favorites!`
@@ -115,10 +83,10 @@ const UserHome = () => {
     axios
       .patch("http://localhost:8000/api/companys/edit/" + e._id, newAmt)
       .then((serverRes) => {
-        console.log("THE PATCH WENT THROUGH!", serverRes);
+        // console.log("THE PATCH WENT THROUGH!", serverRes);
       })
       .catch((err) => {
-        console.log("Patch did not work :(", err);
+        // console.log("Patch did not work :(", err);
       });
   };
 
@@ -126,25 +94,25 @@ const UserHome = () => {
     battery();
     function battery() {
       let arr = [];
-      console.log("THIS NEXTCOMP", nextComp);
+      // console.log("THIS NEXTCOMP", nextComp);
       console.log(
         nextComp.map((single) => {
           if (!isNaN(single.likes)) {
             arr.push(single.likes);
-            console.log("this is arr", arr);
+            // console.log("this is arr", arr);
           }
           let total = 0;
           for (let i = 0; i < arr.length; i++) {
             total += arr[i];
           }
           setAdapter([total]);
-          console.log("this is adapter", adapter);
+          // console.log("this is adapter", adapter);
           return total;
         })
       );
     }
   }, [nextComp]);
-  console.log("this is battery", adapter);
+  // console.log("this is battery", adapter);
   return (
     <div style={{ overflow: "auto" }}>
       <h4 style={{ color: "limegreen" }}>
