@@ -1,45 +1,43 @@
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 
+.gradient {
+    /* ff 3.6+ */
+    background: -moz-radial-gradient(circle at 0% 0%, rgba(102, 0, 169, 1) 17%, rgba(223, 34, 135, 1) 100%);
 
+    /* safari 5.1+,chrome 10+ */
+    background: -webkit-radial-gradient(circle at 0% 0%, rgba(102, 0, 169, 1) 17%, rgba(223, 34, 135, 1) 100%);
 
-.App {
-  text-align: center;
+    /* opera 11.10+ */
+    background: -o-radial-gradient(circle at 0% 0%, rgba(102, 0, 169, 1) 17%, rgba(223, 34, 135, 1) 100%);
+
+    /* ie 10+ */
+    background: -ms-radial-gradient(circle at 0% 0%, rgba(102, 0, 169, 1) 17%, rgba(223, 34, 135, 1) 100%);
+
+    /* global 92%+ browsers support */
+    background: radial-gradient(circle at 0% 0%, rgba(102, 0, 169, 1) 17%, rgba(223, 34, 135, 1) 100%);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+.reverse-gradient {
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+    /* ff 3.6+ */
+    background: -moz-radial-gradient(circle at 0% 0%, rgba(223, 34, 135, 1) 17%, rgba(102, 0, 169, 1) 100%);
 
-.App-link {
-  color: #61dafb;
-}
+    /* safari 5.1+,chrome 10+ */
+    background: -webkit-radial-gradient(circle at 0% 0%, rgba(223, 34, 135, 1) 17%, rgba(102, 0, 169, 1) 100%);
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
+    /* opera 11.10+ */
+    background: -o-radial-gradient(circle at 0% 0%, rgba(223, 34, 135, 1) 17%, rgba(102, 0, 169, 1) 100%);
 
-  to {
-    transform: rotate(360deg);
-  }
+    /* ie 10+ */
+    background: -ms-radial-gradient(circle at 0% 0%, rgba(223, 34, 135, 1) 17%, rgba(102, 0, 169, 1) 100%);
+
+    /* global 92%+ browsers support */
+    background: radial-gradient(circle at 0% 0%, rgba(223, 34, 135, 1) 17%, rgba(102, 0, 169, 1) 100%);
+
 }
