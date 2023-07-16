@@ -16,7 +16,7 @@ function Welcome() {
   return (
     <div
       style={{
-        backgroundColor: "#212121",
+        backgroundColor: "#2B2B2B",
         height: "750px",
         width: "390px",
         display: "flex",
@@ -44,7 +44,7 @@ function Welcome() {
           borderRadius: "7px",
           width: "80%",
           height: "45px",
-          backgroundColor: "#212121",
+          backgroundColor: "#2B2B2B",
           position: "relative",
           top: "45px",
         }}

@@ -25,7 +25,7 @@ const Intro = () => {
         <button
           style={{
             marginTop: "70px",
-            backgroundColor: "#212121",
+            backgroundColor: "#2B2B2B",
             color: "#fe2d8c",
             width: "65%",
             height: "45px",
@@ -46,7 +46,7 @@ const Intro = () => {
         <button
           style={{
             margin: "50px",
-            backgroundColor: "#212121",
+            backgroundColor: "#2B2B2B",
             color: "#fe2d8c",
             width: "65%",
             height: "45px",

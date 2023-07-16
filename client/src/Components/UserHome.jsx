@@ -167,17 +167,17 @@ const UserHome = () => {
           width: "80%",
           height: "45px",
           border: "2px solid #fe2d8c",
-          backgroundColor: "#212121",
+          // backgroundColor: "#2B2B2B",
           fontFamily: "'Righteous'",
           fontSize: "1.5rem",
           color: "#fe2d8c",
           textAlign: "center",
           borderRadius: "5px",
         }}
-        // value={final}
-        // onChange={(e) => {
-        //   setFinalComp(e);
-        // }}
+      // value={final}
+      // onChange={(e) => {
+      //   setFinalComp(e);
+      // }}
       >
         <option value=""></option>
         <option value="Clubs">Clubs</option>
@@ -215,7 +215,7 @@ const UserHome = () => {
                 style={{
                   height: "90px",
                   width: "130px",
-                  backgroundColor: "#212121",
+                  backgroundColor: "#2B2B2B",
                   border: "5px solid black",
                 }}
               >
@@ -409,7 +409,7 @@ const UserHome = () => {
                       style={{
                         fontFamily: "'Righteous'",
                         color: "#fe2d8c",
-                        backgroundColor: "#212121",
+                        backgroundColor: "#2B2B2B",
                         border: "2px solid limegreen",
                         margin: "5px",
                       }}

@@ -29,11 +29,8 @@ function App() {
     <div
       style={{
         position: "sticky",
-        backgroundColor: "#212121",
-        border: "8px solid border-color-pink",
-        borderRadius: "66px",
-        padding: "10px",
-        height: "834px",
+        backgroundColor: "#2B2B2B",
+        // border: "8px solid border-color-pink",
       }}
     >
       <Navbar style={{ position: "sticky" }} />
