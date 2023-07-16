@@ -8,7 +8,7 @@ const Navbar = () => {
             <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <a href="/home" class="flex items-center">
                     <img src={night2} class="h-11 mr-3 bg-gray border-purple" alt="Night Out Logo" />
-                    <span class="self-center text-2xl font-semibold whitespace-nowrap sm-hidden text-blue ">Night Out</span>
+                    {/* <span class="self-center text-2xl font-semibold whitespace-nowrap sm-hidden text-blue ">Night Out</span> */}
                 </a>
                 <div class="flex items-center md:order-2">
                     <button type="button" class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-purple" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
