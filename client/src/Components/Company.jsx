@@ -97,7 +97,7 @@ const Company = () => {
               border: "2px solid #fe2d8c",
               backgroundColor: "#212121",
               fontFamily: "'Righteous'",
-              fontSize: "2rem",
+              fontSize: "2.1rem",
               color: "#fe2d8c",
               textAlign: "center",
               borderRadius: "5px",
