@@ -18,6 +18,10 @@ const CompanySchema = new mongoose.Schema(
       type: Number,
       required: [false],
     },
+    location: {
+      type: Number,
+      required: [true, "number is required"],
+    },
   },
   { timestamps: true }
 );

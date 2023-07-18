@@ -14,6 +14,7 @@ const UserHome = () => {
   const [selected, setSelected] = useState([]);
   const [update, setUpdate] = useState([]);
   const [adapter, setAdapter] = useState();
+  const [distance, setDistance] = useState();
 
   //GEOTRACK CONTENT-----------------
   const [longitude, setLongitude] = useState();
@@ -35,7 +36,7 @@ const UserHome = () => {
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
-      console.log("THIS WHERE U ARE FOOL", position.coords);
+      console.log("This is your current location", position.coords);
       setLongitude(position.coords.longitude);
       setLatitude(position.coords.latitude);
     });
@@ -61,12 +62,17 @@ const UserHome = () => {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     const distance = earthRadius * c;
     let actualDistance = distance / 5240;
-    console.log("DIS DA DISTANCE,", actualDistance, "miles");
+
+    console.log(
+      "This is the distance to destination,",
+      actualDistance,
+      "miles"
+    );
 
     return distance; // Distance in miles
   };
 
-  calculateDistance(longitude, 55, lattitude, 77);
+  calculateDistance(longitude, 5005, lattitude, 767);
 
   useEffect(() => {
     // we need to set up all of our event listeners
