@@ -24,7 +24,7 @@ const UserHome = () => {
       .get("http://localhost:8000/api/companys")
       .then((serverResponse) => {
         // console.log(
-        //   "THIS IS WHAT WERE ARE GETTING BACK",
+        //   "THIS IS WHAT WERE ARE GETTtING BACK",
         //   serverResponse.data.Companys
         // );
         setFilteredComp(serverResponse.data.Companys);
