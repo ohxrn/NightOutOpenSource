@@ -108,6 +108,7 @@ const Company = () => {
             }}
           ></textarea>
         </div>
+        <input type="text"></input>
         <div style={{ textAlign: "center", margin: "35px" }}>
           <button
             style={{
