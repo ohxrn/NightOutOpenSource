@@ -1,9 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import App from "../App";
 import { useNavigate } from "react-router-dom";
-import Intro from "./Intro";
-
 import night2 from "../night2.png";
 import "../App.css";
 <style>
