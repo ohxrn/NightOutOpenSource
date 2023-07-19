@@ -23,7 +23,7 @@ function App() {
   //     indigo: '#06BCC1',//Robin Egg Blue
   return (
     <div className='bg-gray'>
-      <Navbar style={{ position: "sticky" }} />
+      <Navbar />
       <Router>
         <BtmNavBar />
         <Routes>

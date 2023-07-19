@@ -10,44 +10,14 @@ function Welcome() {
   const nav = useNavigate();
 
   return (
-    <div
-      style={{
-        backgroundColor: "#2B2B2B",
-        height: "750px",
-        width: "390px",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-      className="App"
-    >
-      <img
-        style={{
-          width: "130%",
-          margin: "0 auto",
-          position: "absolute",
-          top: "120px",
-        }}
-        src={night2}
-      ></img>
-      <button
-        onClick={() => {
-          nav("/intro");
-        }}
-        style={{
-          color: "#fe2d8c",
-          border: "4px solid #fe2d8c",
-          borderRadius: "7px",
-          width: "80%",
-          height: "45px",
-          backgroundColor: "#2B2B2B",
-          position: "relative",
-          top: "45px",
-        }}
-      >
-        Find what's popular
+    <div class='h-screen'>
+      <h1 class="m-4 mt-24 text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl text-indigo text-center">Always Know What's Poppin!</h1>
+      <button class='' type="button" onClick={() => { nav("/intro") }}>
+        <img src={night2} alt='NightOutLogo' class='flicker-in-1' />
       </button>
+      <p class="m-4 text-lg font-semibold text-indigo text-center lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">Here at NightOut our goal is to provide you with the best bar hopping experience. Always know who's hot and who's not!</p>
     </div>
+
   );
 }
 
