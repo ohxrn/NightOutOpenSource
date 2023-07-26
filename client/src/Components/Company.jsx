@@ -20,7 +20,7 @@ const Company = () => {
   };
 
   const geocodeAddress = () => {
-    const apiKey = "AIzaSyBpkeReT5KZNMo5_WxaRNJepGtDAu8nrG4"; // Replace this with your Google Maps API key
+    const apiKey = "INSERT HERE"; // Replace this with your Google Maps API key
     const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
       address
     )}&key=${apiKey}`;
@@ -185,5 +185,3 @@ const Company = () => {
 };
 
 export default Company;
-
-//AIzaSyBpkeReT5KZNMo5_WxaRNJepGtDAu8nrG4
