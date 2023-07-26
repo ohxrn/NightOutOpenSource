@@ -33,7 +33,8 @@ const Company = () => {
       });
   };
   return (
-    <div>
+    <div class='h-screen mt-10'>
+      <h1 class='text-center text-pink font-semibold text-2xl mb-5'>Business Registration</h1>
       <form onSubmit={handleCompany}>
         <div style={{ textAlign: "center" }}>
           <h2 style={{ fontFamily: "'Righteous'", color: "#fe2d8c" }}>

@@ -29,7 +29,7 @@ const User = () => {
       });
   };
   return (
-    <div>
+    <div class='h-screen'>
       <form onSubmit={handleForm}>
         <div style={{ textAlign: "center", marginTop: "85px" }}>
           <h2

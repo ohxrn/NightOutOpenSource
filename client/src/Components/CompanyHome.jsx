@@ -18,7 +18,7 @@ const CompanyHome = () => {
       });
   }, []);
   return (
-    <div>
+    <div class='h-screen'>
       {company.businessName}
       <hr></hr>
       {company.description}

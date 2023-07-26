@@ -4,6 +4,9 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+    font-family: 'Righteous';
+}
 
 .gradient {
     /* ff 3.6+ */
@@ -41,22 +44,118 @@
 
 }
 
+.text-reverse-gradient {
+    /* Hide original text */
+    color: transparent;
+    /* Apply gradient background to pseudo-element */
+    background-clip: text;
+    -webkit-background-clip: text;
+    /* Use the same gradient class you defined earlier */
+    background-image: radial-gradient(circle at 0% 0%, rgba(223, 34, 135, 1) 17%, rgba(102, 0, 169, 1) 100%);
+}
+
+
+.text-gradient {
+    /* Hide original text */
+    color: transparent;
+    /* Apply gradient background to pseudo-element */
+    background-clip: text;
+    -webkit-background-clip: text;
+    /* Use the same gradient class you defined earlier */
+    background-image: radial-gradient(circle at 0% 0%, rgba(102, 0, 169, 1) 17%, rgba(223, 34, 135, 1) 100%);
+}
+
+
 button.hover\:bg-indigo:hover {
     --tw-bg-opacity: 1;
     background-color: rgb(6 188 193 / var(--tw-bg-opacity));
 }
 
+
+
+/* ==========ANIMATIONS========== */
+/* This is for the gradients them selves to transition back and forth over infinite loop */
+@keyframes gradientTransition {
+    0% {
+        background: radial-gradient(circle at 0% 0%, rgba(102, 0, 169, 1) 17%, rgba(223, 34, 135, 1) 100%);
+    }
+
+    50% {
+        background: radial-gradient(circle at 0% 0%, rgba(223, 34, 135, 1) 17%, rgba(102, 0, 169, 1) 100%);
+    }
+
+    100% {
+        background: radial-gradient(circle at 0% 0%, rgba(102, 0, 169, 1) 17%, rgba(223, 34, 135, 1) 100%);
+    }
+}
+
+/* Apply the gradientTransition animation to elements with the .gradient class */
+.gradient-animation {
+    animation: gradientTransition 3s infinite;
+}
+
+/* This is for the gradients for texts themselves to transitioning back and forth */
+@keyframes textGradientTransition {
+
+    0%,
+    100% {
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        background-image: radial-gradient(circle at 0% 0%, rgba(102, 0, 169, 1) 17%, rgba(223, 34, 135, 1) 100%);
+    }
+
+    50% {
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        background-image: radial-gradient(circle at 0% 0%, rgba(223, 34, 135, 1) 17%, rgba(102, 0, 169, 1) 100%);
+    }
+}
+
+/* Apply the textGradientTransition animation to elements with the .text-gradient class */
+.text-gradient-animation {
+    animation: textGradientTransition ease-in-out 3s infinite;
+}
+
+@keyframes textReverseGradientTransition {
+
+    0%,
+    100% {
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        background-image: radial-gradient(circle at 0% 0%, rgba(223, 34, 135, 1) 17%, rgba(102, 0, 169, 1) 100%);
+    }
+
+    50% {
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        background-image: radial-gradient(circle at 0% 0%, rgba(102, 0, 169, 1) 17%, rgba(223, 34, 135, 1) 100%);
+    }
+}
+
+/* Apply the textReverseGradientTransition animation to elements with the .text-reverse-gradient class */
+.text-reverse-gradient-animation {
+    animation: textReverseGradientTransition 3s infinite;
+    animation-timing-function: ease-in-out;
+}
+
+
+
+
+
+
+/**
+* @animation flicker-in-1
+*/
 /* animation for the logo on load */
 .flicker-in-1 {
     -webkit-animation: flicker-in-1 2s linear both;
     animation: flicker-in-1 2s linear both;
 }
 
-/**
- * ----------------------------------------
- * @animation flicker-in-1
- * ----------------------------------------
- */
 @-webkit-keyframes flicker-in-1 {
     0% {
         opacity: 0;

@@ -10,9 +10,6 @@ import CompanyHome from "./Components/CompanyHome";
 import UserHome from "./Components/UserHome";
 import BtmNavBar from "./Components/BtmNavBar";
 
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Gruppo&display=swap');
-</style>;
 
 function App() {
   //   colors: {
