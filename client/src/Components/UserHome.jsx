@@ -154,8 +154,8 @@ const UserHome = () => {
   return (
     <div style={{ overflow: "auto" }}>
       <h4 style={{ color: "limegreen" }}>
-        {update.map((e, key) => {
-          return <p key={key}>{e}</p>;
+        {update.map((h, key) => {
+          return <p key={key}>{h}</p>;
         })}
       </h4>
       <h1
