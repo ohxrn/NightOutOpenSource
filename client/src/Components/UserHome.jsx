@@ -11,10 +11,12 @@ const UserHome = () => {
   const [filteredComp, setFilteredComp] = useState([]);
   const [nextComp, setComp] = useState([]);
   const [socket] = useState(() => io(":8000"));
-  const [selected, setSelected] = useState([]);
+  const [selected] = useState([]);
   const [update, setUpdate] = useState([]);
   const [adapter, setAdapter] = useState();
-  const [distance, setDistance] = useState();
+
+  const [companyLat, setCompanyLat] = useState("");
+  const [companyLon, setCompanyLon] = useState("");
 
   //GEOTRACK CONTENT-----------------
   const [longitude, setLongitude] = useState();
@@ -23,17 +25,21 @@ const UserHome = () => {
     axios
       .get("http://localhost:8000/api/companys")
       .then((serverResponse) => {
-        // console.log(
-        //   "THIS IS WHAT WERE ARE GETTING BACK",
-        //   serverResponse.data.Companys
-        // );
+        console.log(
+          "THIS IS WHAT WERE ARE GETTING BACK",
+          serverResponse.data.Companys[35].longitude
+        );
         setFilteredComp(serverResponse.data.Companys);
+        console.log("THIS IS COMPARED LAT", serverResponse.data.Companys[35]);
+        setCompanyLat(serverResponse.data.Companys[36].latitude);
+        setCompanyLon(serverResponse.data.Companys[36].longitude);
       })
       .catch((err) => {
         console.log("this is the error", err);
       });
   }, []);
-
+  console.log("this is longitude", companyLon);
+  console.log("this is latitude", companyLat);
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       console.log("This is your current location", position.coords);
@@ -61,18 +67,13 @@ const UserHome = () => {
       Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.sin(lonDiff / 2) ** 2;
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     const distance = earthRadius * c;
-    let actualDistance = distance / 5240;
 
-    console.log(
-      "This is the distance to destination,",
-      actualDistance,
-      "miles"
-    );
+    console.log("This is the distance to destination,", distance, "miles");
 
     return distance; // Distance in miles
   };
 
-  calculateDistance(longitude, 5005, lattitude, 767);
+  calculateDistance(lattitude, longitude, companyLat, companyLon);
 
   useEffect(() => {
     // we need to set up all of our event listeners
@@ -104,7 +105,7 @@ const UserHome = () => {
   }, [filteredComp, context]);
 
   const handleButton = (e) => {
-    if (e.likes === undefined || e.likes == [] || e.likes == "") {
+    if (e.likes === undefined || e.likes === [] || e.likes === "") {
       e.likes = 0;
     }
 
@@ -233,13 +234,13 @@ const UserHome = () => {
                     opacity: "50%",
                   }}
                   src={Screenshot}
+                  alt="this is an img"
                 ></img>
               </div>
               <div style={{ display: "flex" }}>
                 <div>
                   <h1
                     style={{
-                      margin: "0px",
                       padding: "0px",
                       margin: "10px",
                       fontFamily: "'Righteous'",
@@ -248,11 +249,8 @@ const UserHome = () => {
                   >
                     {single.businessName}
                   </h1>
-                  <p
+                  <h1
                     style={{
-                      margin: "0px",
-                      padding: "0px",
-                      margin: "0px",
                       padding: "0px",
                       margin: "10px",
                       fontFamily: "'Righteous'",
@@ -262,15 +260,11 @@ const UserHome = () => {
                     }}
                   >
                     {single.description}
-                  </p>
+                  </h1>
                 </div>
                 <div>
-                  <p
+                  <h2
                     style={{
-                      margin: "0px",
-                      padding: "0px",
-                      margin: "0px",
-                      padding: "0px",
                       margin: "10px",
                       fontFamily: "'Righteous'",
                       color: "limegreen",
@@ -401,12 +395,12 @@ const UserHome = () => {
                             ></div>
                           </div>
                         ) : (
-                          <h1></h1>
+                          <></>
                         )}
                       </div>
                     </div>
                     {single.likes} Users
-                  </p>
+                  </h2>
 
                   <label
                     style={{ fontFamily: "'Righteous'", color: "limegreen" }}
