@@ -42,14 +42,22 @@ const UserHome = () => {
   console.log("this is latitude", companyLat);
 
   //--------------------PING LOCATION ALGORITHM--------------------------------------------
-  useEffect(() => {
+  const fetchGeolocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
-      console.log("This is your current location", position.coords);
+      console.log("PINGED!---------HERE'S LOCATION", position.coords);
       setLongitude(position.coords.longitude);
       setLatitude(position.coords.latitude);
     });
-  }, []);
+  };
 
+  useEffect(() => {
+    fetchGeolocation();
+
+    const intervalId = setInterval(fetchGeolocation, 10000);
+
+    // Clean up the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  }, []);
   //--------------------------------------------------------------------------------------
   //
   //
