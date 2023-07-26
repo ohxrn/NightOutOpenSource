@@ -27,12 +27,12 @@ const UserHome = () => {
       .then((serverResponse) => {
         console.log(
           "THIS IS WHAT WERE ARE GETTING BACK",
-          serverResponse.data.Companys[35].longitude
+          serverResponse.data.Companys
         );
         setFilteredComp(serverResponse.data.Companys);
-        console.log("THIS IS COMPARED LAT", serverResponse.data.Companys[35]);
-        setCompanyLat(serverResponse.data.Companys[36].latitude);
-        setCompanyLon(serverResponse.data.Companys[36].longitude);
+        console.log("THIS IS COMPARED LAT", serverResponse.data.Companys[0]);
+        setCompanyLat(serverResponse.data.Companys[0].latitude);
+        setCompanyLon(serverResponse.data.Companys[0].longitude);
       })
       .catch((err) => {
         console.log("this is the error", err);
@@ -40,6 +40,8 @@ const UserHome = () => {
   }, []);
   console.log("this is longitude", companyLon);
   console.log("this is latitude", companyLat);
+
+  //--------------------PING LOCATION ALGORITHM--------------------------------------------
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       console.log("This is your current location", position.coords);
@@ -48,20 +50,24 @@ const UserHome = () => {
     });
   }, []);
 
+  //--------------------------------------------------------------------------------------
+  //
+  //
+  //
+  //
+  //
+  //------------------LOCATION CALCULATION------------------------------------------------
+
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const earthRadius = 3958.8; // Radius of the Earth in miles
-
-    // Convert latitude and longitude to radians
     const lat1Rad = (lat1 * Math.PI) / 180;
     const lon1Rad = (lon1 * Math.PI) / 180;
     const lat2Rad = (lat2 * Math.PI) / 180;
     const lon2Rad = (lon2 * Math.PI) / 180;
-
-    // Calculate the differences between coordinates
+    //-----------------------------------------
     const latDiff = lat2Rad - lat1Rad;
     const lonDiff = lon2Rad - lon1Rad;
-
-    // Use the Haversine formula to calculate the distance
+    //----------------------------------------
     const a =
       Math.sin(latDiff / 2) ** 2 +
       Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.sin(lonDiff / 2) ** 2;
@@ -74,6 +80,10 @@ const UserHome = () => {
   };
 
   calculateDistance(lattitude, longitude, companyLat, companyLon);
+  //
+  //
+  //
+  //--------------------END LOCATION CALC------------------------------------------------------------
 
   useEffect(() => {
     // we need to set up all of our event listeners
