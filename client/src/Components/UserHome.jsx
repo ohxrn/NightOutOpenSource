@@ -67,9 +67,15 @@ const UserHome = () => {
           company.latitude,
           company.longitude
         );
-        console.log("THIS IS DISTANCE", distance, "for", company.businessName);
+
         if (distance < 5) {
           console.log("BELOW FIVE MILES FOR", company.businessName);
+          console.log(
+            "THIS IS DISTANCE",
+            distance,
+            "for",
+            company.businessName
+          );
         } else {
           console.log("NOT BELOW 5", company.businessName);
         }
@@ -80,7 +86,7 @@ const UserHome = () => {
   useEffect(() => {
     fetchGeolocation();
 
-    const intervalId = setInterval(fetchGeolocation, 10000);
+    const intervalId = setInterval(fetchGeolocation, 30000);
 
     // Clean up the interval when the component unmounts
     return () => clearInterval(intervalId);
