@@ -21,7 +21,7 @@ const UserHome = () => {
 
   //GEOTRACK CONTENT-----------------
   const [longitude, setLongitude] = useState();
-  const [lattitude, setLatitude] = useState();
+  const [latitude, setLatitude] = useState();
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/companys")
@@ -53,44 +53,54 @@ const UserHome = () => {
   };
 
   //--------------------PING LOCATION ALGORITHM--------------------------------------------
-  const fetchGeolocation = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      console.log("PINGED!---------HERE'S LOCATION", position.coords);
-      setLongitude(position.coords.longitude);
-      setLatitude(position.coords.latitude);
 
-      // Calculate distances for each company
-      filteredComp.forEach((company) => {
-        const distance = calculateDistance(
-          lattitude,
-          longitude,
-          company.latitude,
-          company.longitude
-        );
+  useEffect(() => {
+    const fetchGeolocation = async () => {
+      try {
+        const position = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
 
+        console.log("PINGED!---------HERE'S LOCATION", position.coords);
+        setLongitude(position.coords.longitude);
+        setLatitude(position.coords.latitude);
+      } catch (error) {
+        console.log("Error fetching geolocation:", error);
+      }
+    };
+
+    fetchGeolocation();
+    const intervalId = setInterval(fetchGeolocation, 7000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    const calculateDistances = async () => {
+      const distances = await Promise.all(
+        filteredComp.map((company) =>
+          calculateDistance(
+            latitude,
+            longitude,
+            company.latitude,
+            company.longitude
+          )
+        )
+      );
+
+      distances.forEach((distance, index) => {
+        const company = filteredComp[index];
+        console.log("THIS IS DISTANCE", distance, "for", company.businessName);
         if (distance < 5) {
           console.log("BELOW FIVE MILES FOR", company.businessName);
-          console.log(
-            "THIS IS DISTANCE",
-            distance,
-            "for",
-            company.businessName
-          );
         } else {
           console.log("NOT BELOW 5", company.businessName);
         }
       });
-    });
-  };
+    };
 
-  useEffect(() => {
-    fetchGeolocation();
-
-    const intervalId = setInterval(fetchGeolocation, 30000);
-
-    // Clean up the interval when the component unmounts
-    return () => clearInterval(intervalId);
-  }, [filteredComp]);
+    calculateDistances();
+  }, [latitude, longitude, filteredComp]);
   //--------------------------------------------------------------------------------------
   //
   //
@@ -188,6 +198,7 @@ const UserHome = () => {
           return <p key={key}>{h}</p>;
         })}
       </h4>
+
       <h1
         style={{
           margin: "10px",
