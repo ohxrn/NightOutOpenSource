@@ -1,30 +1,21 @@
 import React from "react";
+import { Button } from 'flowbite-react';
 import User from "./User";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import "../style.css";
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Gruppo&display=swap');
-</style>;
 
 const Intro = () => {
   const nav = useNavigate();
   return (
-    <div style={{ height: "800px" }}>
-      <h1
-        style={{
-          fontFamily: "'Righteous'",
-          color: "#fe2d8c",
-          textAlign: "center",
-        }}
-      >
+    <div class='h-screen'>
+      <h1 class='text-center mt-10 text-pink text-xl'>
         Let's find a good fit for you here.
       </h1>
       <div style={{ textAlign: "center" }}>
         <button
           style={{
             marginTop: "70px",
-            backgroundColor: "#212121",
+            backgroundColor: "#2B2B2B",
             color: "#fe2d8c",
             width: "65%",
             height: "45px",
@@ -45,7 +36,7 @@ const Intro = () => {
         <button
           style={{
             margin: "50px",
-            backgroundColor: "#212121",
+            backgroundColor: "#2B2B2B",
             color: "#fe2d8c",
             width: "65%",
             height: "45px",

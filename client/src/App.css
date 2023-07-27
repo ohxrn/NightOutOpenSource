@@ -1,45 +1,409 @@
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-
-
-
-.App {
-  text-align: center;
+* {
+    font-family: 'Righteous';
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.gradient {
+    /* ff 3.6+ */
+    background: -moz-radial-gradient(circle at 0% 0%, rgba(102, 0, 169, 1) 17%, rgba(223, 34, 135, 1) 100%);
+
+    /* safari 5.1+,chrome 10+ */
+    background: -webkit-radial-gradient(circle at 0% 0%, rgba(102, 0, 169, 1) 17%, rgba(223, 34, 135, 1) 100%);
+
+    /* opera 11.10+ */
+    background: -o-radial-gradient(circle at 0% 0%, rgba(102, 0, 169, 1) 17%, rgba(223, 34, 135, 1) 100%);
+
+    /* ie 10+ */
+    background: -ms-radial-gradient(circle at 0% 0%, rgba(102, 0, 169, 1) 17%, rgba(223, 34, 135, 1) 100%);
+
+    /* global 92%+ browsers support */
+    background: radial-gradient(circle at 0% 0%, rgba(102, 0, 169, 1) 17%, rgba(223, 34, 135, 1) 100%);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.reverse-gradient {
+
+    /* ff 3.6+ */
+    background: -moz-radial-gradient(circle at 0% 0%, rgba(223, 34, 135, 1) 17%, rgba(102, 0, 169, 1) 100%);
+
+    /* safari 5.1+,chrome 10+ */
+    background: -webkit-radial-gradient(circle at 0% 0%, rgba(223, 34, 135, 1) 17%, rgba(102, 0, 169, 1) 100%);
+
+    /* opera 11.10+ */
+    background: -o-radial-gradient(circle at 0% 0%, rgba(223, 34, 135, 1) 17%, rgba(102, 0, 169, 1) 100%);
+
+    /* ie 10+ */
+    background: -ms-radial-gradient(circle at 0% 0%, rgba(223, 34, 135, 1) 17%, rgba(102, 0, 169, 1) 100%);
+
+    /* global 92%+ browsers support */
+    background: radial-gradient(circle at 0% 0%, rgba(223, 34, 135, 1) 17%, rgba(102, 0, 169, 1) 100%);
+
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.text-reverse-gradient {
+    /* Hide original text */
+    color: transparent;
+    /* Apply gradient background to pseudo-element */
+    background-clip: text;
+    -webkit-background-clip: text;
+    /* Use the same gradient class you defined earlier */
+    background-image: radial-gradient(circle at 0% 0%, rgba(223, 34, 135, 1) 17%, rgba(102, 0, 169, 1) 100%);
 }
 
-.App-link {
-  color: #61dafb;
+
+.text-gradient {
+    /* Hide original text */
+    color: transparent;
+    /* Apply gradient background to pseudo-element */
+    background-clip: text;
+    -webkit-background-clip: text;
+    /* Use the same gradient class you defined earlier */
+    background-image: radial-gradient(circle at 0% 0%, rgba(102, 0, 169, 1) 17%, rgba(223, 34, 135, 1) 100%);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
 
-  to {
-    transform: rotate(360deg);
-  }
+button.hover\:bg-indigo:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(6 188 193 / var(--tw-bg-opacity));
+}
+
+
+
+/* ==========ANIMATIONS========== */
+/* This is for the gradients them selves to transition back and forth over infinite loop */
+@keyframes gradientTransition {
+    0% {
+        background: radial-gradient(circle at 0% 0%, rgba(102, 0, 169, 1) 17%, rgba(223, 34, 135, 1) 100%);
+    }
+
+    50% {
+        background: radial-gradient(circle at 0% 0%, rgba(223, 34, 135, 1) 17%, rgba(102, 0, 169, 1) 100%);
+    }
+
+    100% {
+        background: radial-gradient(circle at 0% 0%, rgba(102, 0, 169, 1) 17%, rgba(223, 34, 135, 1) 100%);
+    }
+}
+
+/* Apply the gradientTransition animation to elements with the .gradient class */
+.gradient-animation {
+    animation: gradientTransition 3s infinite;
+}
+
+/* This is for the gradients for texts themselves to transitioning back and forth */
+@keyframes textGradientTransition {
+
+    0%,
+    100% {
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        background-image: radial-gradient(circle at 0% 0%, rgba(102, 0, 169, 1) 17%, rgba(223, 34, 135, 1) 100%);
+    }
+
+    50% {
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        background-image: radial-gradient(circle at 0% 0%, rgba(223, 34, 135, 1) 17%, rgba(102, 0, 169, 1) 100%);
+    }
+}
+
+/* Apply the textGradientTransition animation to elements with the .text-gradient class */
+.text-gradient-animation {
+    animation: textGradientTransition ease-in-out 3s infinite;
+}
+
+@keyframes textReverseGradientTransition {
+
+    0%,
+    100% {
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        background-image: radial-gradient(circle at 0% 0%, rgba(223, 34, 135, 1) 17%, rgba(102, 0, 169, 1) 100%);
+    }
+
+    50% {
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        background-image: radial-gradient(circle at 0% 0%, rgba(102, 0, 169, 1) 17%, rgba(223, 34, 135, 1) 100%);
+    }
+}
+
+/* Apply the textReverseGradientTransition animation to elements with the .text-reverse-gradient class */
+.text-reverse-gradient-animation {
+    animation: textReverseGradientTransition 3s infinite;
+    animation-timing-function: ease-in-out;
+}
+
+
+
+
+
+
+/**
+* @animation flicker-in-1
+*/
+/* animation for the logo on load */
+.flicker-in-1 {
+    -webkit-animation: flicker-in-1 2s linear both;
+    animation: flicker-in-1 2s linear both;
+}
+
+@-webkit-keyframes flicker-in-1 {
+    0% {
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0;
+    }
+
+    10.1% {
+        opacity: 1;
+    }
+
+    10.2% {
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 0;
+    }
+
+    20.1% {
+        opacity: 1;
+    }
+
+    20.6% {
+        opacity: 0;
+    }
+
+    30% {
+        opacity: 0;
+    }
+
+    30.1% {
+        opacity: 1;
+    }
+
+    30.5% {
+        opacity: 1;
+    }
+
+    30.6% {
+        opacity: 0;
+    }
+
+    45% {
+        opacity: 0;
+    }
+
+    45.1% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    55% {
+        opacity: 1;
+    }
+
+    55.1% {
+        opacity: 0;
+    }
+
+    57% {
+        opacity: 0;
+    }
+
+    57.1% {
+        opacity: 1;
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    60.1% {
+        opacity: 0;
+    }
+
+    65% {
+        opacity: 0;
+    }
+
+    65.1% {
+        opacity: 1;
+    }
+
+    75% {
+        opacity: 1;
+    }
+
+    75.1% {
+        opacity: 0;
+    }
+
+    77% {
+        opacity: 0;
+    }
+
+    77.1% {
+        opacity: 1;
+    }
+
+    85% {
+        opacity: 1;
+    }
+
+    85.1% {
+        opacity: 0;
+    }
+
+    86% {
+        opacity: 0;
+    }
+
+    86.1% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes flicker-in-1 {
+    0% {
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0;
+    }
+
+    10.1% {
+        opacity: 1;
+    }
+
+    10.2% {
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 0;
+    }
+
+    20.1% {
+        opacity: 1;
+    }
+
+    20.6% {
+        opacity: 0;
+    }
+
+    30% {
+        opacity: 0;
+    }
+
+    30.1% {
+        opacity: 1;
+    }
+
+    30.5% {
+        opacity: 1;
+    }
+
+    30.6% {
+        opacity: 0;
+    }
+
+    45% {
+        opacity: 0;
+    }
+
+    45.1% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    55% {
+        opacity: 1;
+    }
+
+    55.1% {
+        opacity: 0;
+    }
+
+    57% {
+        opacity: 0;
+    }
+
+    57.1% {
+        opacity: 1;
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    60.1% {
+        opacity: 0;
+    }
+
+    65% {
+        opacity: 0;
+    }
+
+    65.1% {
+        opacity: 1;
+    }
+
+    75% {
+        opacity: 1;
+    }
+
+    75.1% {
+        opacity: 0;
+    }
+
+    77% {
+        opacity: 0;
+    }
+
+    77.1% {
+        opacity: 1;
+    }
+
+    85% {
+        opacity: 1;
+    }
+
+    85.1% {
+        opacity: 0;
+    }
+
+    86% {
+        opacity: 0;
+    }
+
+    86.1% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
