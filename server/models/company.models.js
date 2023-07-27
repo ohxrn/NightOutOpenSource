@@ -18,6 +18,14 @@ const CompanySchema = new mongoose.Schema(
       type: Number,
       required: [false],
     },
+    latitude: {
+      type: Number,
+      required: [true, "number is required"],
+    },
+    longitude: {
+      type: Number,
+      required: [true, "number required"],
+    },
   },
   { timestamps: true }
 );

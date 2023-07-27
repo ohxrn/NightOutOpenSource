@@ -11,27 +11,108 @@ const UserHome = () => {
   const [filteredComp, setFilteredComp] = useState([]);
   const [nextComp, setComp] = useState([]);
   const [socket] = useState(() => io(":8000"));
-  const [selected, setSelected] = useState([]);
+  const [selected] = useState([]);
   const [update, setUpdate] = useState([]);
-  const [final, setFinalComp] = useState([]);
-  const [battery, setBattery] = useState([]);
   const [adapter, setAdapter] = useState();
-  const arr = [];
+  const [distance, setDistance] = useState("");
 
+  const [companyLat, setCompanyLat] = useState("");
+  const [companyLon, setCompanyLon] = useState("");
+
+  //GEOTRACK CONTENT-----------------
+  const [longitude, setLongitude] = useState();
+  const [latitude, setLatitude] = useState();
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/companys")
       .then((serverResponse) => {
-        console.log(
-          "THIS IS WHAT WERE ARE GETTING BACK",
-          serverResponse.data.Companys
-        );
+        // console.log(
+        //   "THIS IS WHAT WERE ARE GETTING BACK",
+        //   serverResponse.data.Companys
+        // );
         setFilteredComp(serverResponse.data.Companys);
+        // console.log("THIS IS COMPARED LAT", serverResponse.data.Companys[0]);
       })
       .catch((err) => {
         console.log("this is the error", err);
       });
   }, []);
+  const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    const earthRadius = 3958.8; // Radius of the Earth in miles
+    const lat1Rad = (lat1 * Math.PI) / 180;
+    const lon1Rad = (lon1 * Math.PI) / 180;
+    const lat2Rad = (lat2 * Math.PI) / 180;
+    const lon2Rad = (lon2 * Math.PI) / 180;
+    const latDiff = lat2Rad - lat1Rad;
+    const lonDiff = lon2Rad - lon1Rad;
+    const a =
+      Math.sin(latDiff / 2) ** 2 +
+      Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.sin(lonDiff / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return earthRadius * c; // Return the calculated distance
+  };
+
+  //--------------------PING LOCATION ALGORITHM--------------------------------------------
+
+  useEffect(() => {
+    const fetchGeolocation = async () => {
+      try {
+        const position = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
+
+        console.log("PINGED!---------HERE'S LOCATION", position.coords);
+        setLongitude(position.coords.longitude);
+        setLatitude(position.coords.latitude);
+      } catch (error) {
+        console.log("Error fetching geolocation:", error);
+      }
+    };
+
+    fetchGeolocation();
+    const intervalId = setInterval(fetchGeolocation, 7000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    const calculateDistances = async () => {
+      const distances = await Promise.all(
+        filteredComp.map((company) =>
+          calculateDistance(
+            latitude,
+            longitude,
+            company.latitude,
+            company.longitude
+          )
+        )
+      );
+
+      distances.forEach((distance, index) => {
+        const company = filteredComp[index];
+        console.log("THIS IS DISTANCE", distance, "for", company.businessName);
+        if (distance < 5) {
+          console.log("BELOW FIVE MILES FOR", company.businessName);
+        } else {
+          console.log("NOT BELOW 5", company.businessName);
+        }
+      });
+    };
+
+    calculateDistances();
+  }, [latitude, longitude, filteredComp]);
+  //--------------------------------------------------------------------------------------
+  //
+  //
+  //
+  //
+  //
+  //------------------LOCATION CALCULATION------------------------------------------------
+
+  //
+  //
+  //
+  //--------------------END LOCATION CALC------------------------------------------------------------
 
   useEffect(() => {
     // we need to set up all of our event listeners
@@ -63,44 +144,9 @@ const UserHome = () => {
   }, [filteredComp, context]);
 
   const handleButton = (e) => {
-    if (e.likes === undefined || e.likes == [] || e.likes == "") {
+    if (e.likes === undefined || e.likes === [] || e.likes === "") {
       e.likes = 0;
     }
-
-    // Calculate();
-    // function Calculate() {
-    //   console.log("this the mean", ADAPTER / nextComp.length);
-    //   console.log("this the like", e.likes);
-    //   if (e.likes < 0.6 * (ADAPTER / nextComp.length)) {
-    //     setBattery([1]);
-    //     return;
-    //   }
-    //   if (
-    //     e.likes < 0.8 * (ADAPTER / nextComp.length) &&
-    //     e.likes > 0.6 * (ADAPTER / nextComp.length)
-    //   ) {
-    //     setBattery([1, 1]);
-    //     return;
-    //   }
-    //   if (
-    //     e.likes < ADAPTER / nextComp.length &&
-    //     e.likes > 0.8 * (ADAPTER / nextComp.length)
-    //   ) {
-    //     setBattery([1, 1, 1]);
-    //     return;
-    //   }
-    //   if (
-    //     e.likes > 1.2 * (ADAPTER / nextComp.length) &&
-    //     e.likes < 1.4 * (ADAPTER / nextComp.length)
-    //   ) {
-    //     setBattery([1, 1, 1, 1]);
-    //     return;
-    //   }
-    //   if (e.likes > 1.3 * (ADAPTER / nextComp.length)) {
-    //     setBattery([1, 1, 1, 1, 1]);
-    //     return;
-    //   }
-    // }
 
     socket.emit(
       "theThrow",
@@ -115,10 +161,10 @@ const UserHome = () => {
     axios
       .patch("http://localhost:8000/api/companys/edit/" + e._id, newAmt)
       .then((serverRes) => {
-        console.log("THE PATCH WENT THROUGH!", serverRes);
+        // console.log("THE PATCH WENT THROUGH!", serverRes);
       })
       .catch((err) => {
-        console.log("Patch did not work :(", err);
+        // console.log("Patch did not work :(", err);
       });
   };
 
@@ -126,55 +172,55 @@ const UserHome = () => {
     battery();
     function battery() {
       let arr = [];
-      console.log("THIS NEXTCOMP", nextComp);
+      // console.log("THIS NEXTCOMP", nextComp);
       console.log(
         nextComp.map((single) => {
           if (!isNaN(single.likes)) {
             arr.push(single.likes);
-            console.log("this is arr", arr);
+            // console.log("this is arr", arr);
           }
           let total = 0;
           for (let i = 0; i < arr.length; i++) {
             total += arr[i];
           }
           setAdapter([total]);
-          console.log("this is adapter", adapter);
+          // console.log("this is adapter", adapter);
           return total;
         })
       );
     }
   }, [nextComp]);
-  console.log("this is battery", adapter);
+  // console.log("this is battery", adapter);
   return (
-    <div class='h-screen'>
-      <div style={{ overflow: "auto" }}>
-        <h4 style={{ color: "limegreen" }}>
-          {update.map((e, key) => {
-            return <p key={key}>{e}</p>;
-          })}
-        </h4>
-        <h1
-          style={{
-            margin: "10px",
-            padding: "0",
-            fontFamily: "'Righteous'",
-            color: "white",
-          }}
-        >
-          {selected}
-        </h1>
-        <select
-          style={{
-            width: "80%",
-            height: "45px",
-            border: "2px solid #fe2d8c",
-            // backgroundColor: "#2B2B2B",
-            fontFamily: "'Righteous'",
-            fontSize: "1.5rem",
-            color: "#fe2d8c",
-            textAlign: "center",
-            borderRadius: "5px",
-          }}
+    <div style={{ overflow: "auto" }}>
+      <h4 style={{ color: "limegreen" }}>
+        {update.map((h, key) => {
+          return <p key={key}>{h}</p>;
+        })}
+      </h4>
+
+      <h1
+        style={{
+          margin: "10px",
+          padding: "0",
+          fontFamily: "'Righteous'",
+          color: "white",
+        }}
+      >
+        {selected}
+      </h1>
+      <select
+        style={{
+          width: "80%",
+          height: "45px",
+          border: "2px solid #fe2d8c",
+          backgroundColor: "#212121",
+          fontFamily: "'Righteous'",
+          fontSize: "1.5rem",
+          color: "#fe2d8c",
+          textAlign: "center",
+          borderRadius: "5px",
+        }}
         // value={final}
         // onChange={(e) => {
         //   setFinalComp(e);
@@ -275,6 +321,159 @@ const UserHome = () => {
                       <div>
                         <div style={{ display: "flex" }}>
                           {single.likes <= 0.6 * (adapter / nextComp.length) ? (
+                  src={Screenshot}
+                  alt="this is an img"
+                ></img>
+              </div>
+              <div style={{ display: "flex" }}>
+                <div>
+                  <h1
+                    style={{
+                      padding: "0px",
+                      margin: "10px",
+                      fontFamily: "'Righteous'",
+                      color: "#fe2d8c",
+                    }}
+                  >
+                    {single.businessName}
+                  </h1>
+                  <h1
+                    style={{
+                      padding: "0px",
+                      margin: "10px",
+                      fontFamily: "'Righteous'",
+                      color: "white",
+                      width: "100px",
+                      fontSize: ".7rem",
+                    }}
+                  >
+                    {single.description}
+                  </h1>
+                </div>
+                <div>
+                  <h2
+                    style={{
+                      margin: "10px",
+                      fontFamily: "'Righteous'",
+                      color: "limegreen",
+                    }}
+                  >
+                    {/* {console.log("this is length", nextComp.length)} */}
+                    <div>
+                      <div style={{ display: "flex" }}>
+                        {single.likes <= 0.6 * (adapter / nextComp.length) ? (
+                          <div
+                            style={{
+                              width: "15px",
+                              height: "5px",
+                              backgroundColor: "green",
+                            }}
+                          ></div>
+                        ) : single.likes < 0.8 * (adapter / nextComp.length) &&
+                          single.likes > 0.6 * (adapter / nextComp.length) ? (
+                          <div style={{ display: "flex", gap: "3px" }}>
+                            <div
+                              style={{
+                                width: "15px",
+                                height: "5px",
+                                backgroundColor: "green",
+                              }}
+                            ></div>
+                            <div
+                              style={{
+                                width: "15px",
+                                height: "5px",
+                                backgroundColor: "green",
+                              }}
+                            ></div>
+                          </div>
+                        ) : single.likes < adapter / nextComp.length &&
+                          single.likes > 0.8 * (adapter / nextComp.length) ? (
+                          <div style={{ display: "flex", gap: "3px" }}>
+                            <div
+                              style={{
+                                width: "15px",
+                                height: "5px",
+                                backgroundColor: "green",
+                              }}
+                            ></div>
+                            <div
+                              style={{
+                                width: "15px",
+                                height: "5px",
+                                backgroundColor: "green",
+                              }}
+                            ></div>
+                            <div
+                              style={{
+                                width: "15px",
+                                height: "5px",
+                                backgroundColor: "green",
+                              }}
+                            ></div>
+                          </div>
+                        ) : single.likes < 1.3 * (adapter / nextComp.length) &&
+                          single.likes > 1 * (adapter / nextComp.length) ? (
+                          <div style={{ display: "flex", gap: "3px" }}>
+                            <div
+                              style={{
+                                width: "15px",
+                                height: "5px",
+                                backgroundColor: "green",
+                              }}
+                            ></div>
+                            <div
+                              style={{
+                                width: "15px",
+                                height: "5px",
+                                backgroundColor: "green",
+                              }}
+                            ></div>
+                            <div
+                              style={{
+                                width: "15px",
+                                height: "5px",
+                                backgroundColor: "green",
+                              }}
+                            ></div>
+                            <div
+                              style={{
+                                width: "15px",
+                                height: "5px",
+                                backgroundColor: "green",
+                              }}
+                            ></div>
+                          </div>
+                        ) : single.likes > 1.3 * (adapter / nextComp.length) ? (
+                          <div style={{ display: "flex", gap: "3px" }}>
+                            <div
+                              style={{
+                                width: "15px",
+                                height: "5px",
+                                backgroundColor: "green",
+                              }}
+                            ></div>
+                            <div
+                              style={{
+                                width: "15px",
+                                height: "5px",
+                                backgroundColor: "green",
+                              }}
+                            ></div>
+                            <div
+                              style={{
+                                width: "15px",
+                                height: "5px",
+                                backgroundColor: "green",
+                              }}
+                            ></div>
+                            <div
+                              style={{
+                                width: "15px",
+                                height: "5px",
+                                backgroundColor: "green",
+                              }}
+                            ></div>
                             <div
                               style={{
                                 width: "15px",
@@ -402,7 +601,14 @@ const UserHome = () => {
                       </div>
                       {single.likes} Users
                     </p>
-
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+                      </div>
+                    </div>
+                    {single.likes} Users
+                  </h2>
                     <label
                       style={{ fontFamily: "'Righteous'", color: "limegreen" }}
                     >

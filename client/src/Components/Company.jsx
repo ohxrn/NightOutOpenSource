@@ -9,8 +9,44 @@ const Company = () => {
   const [type, setType] = useState("");
   const [businessName, setBusinessName] = useState("");
   const [description, setDescription] = useState("");
+  const [address, setAddress] = useState("");
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
 
   const nav = useNavigate();
+
+  const handleAddressChange = (event) => {
+    setAddress(event.target.value);
+  };
+
+  const geocodeAddress = () => {
+    const apiKey = "INSERT HERE"; // Replace this with your Google Maps API key
+    const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+      address
+    )}&key=${apiKey}`;
+
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        console.log(response.data.results);
+        if (
+          response.data &&
+          response.data.results &&
+          response.data.results.length > 0
+        ) {
+          const location = response.data.results[0].geometry.location;
+          setLatitude(location.lat);
+          setLongitude(location.lng);
+        } else {
+          // Handle error or invalid address
+          console.log("Invalid address or no results found.");
+        }
+      })
+      .catch((error) => {
+        // Handle error
+        console.log("Error occurred while geocoding:", error);
+      });
+  };
 
   const handleCompany = (e) => {
     e.preventDefault();
@@ -19,6 +55,8 @@ const Company = () => {
       businessName: businessName,
       description: description,
       likes: 0,
+      latitude,
+      longitude,
     };
     axios
       .post("http://localhost:8000/api/companys", makeCompany)
@@ -32,6 +70,7 @@ const Company = () => {
         console.log("❌THROW DID NOT WORK", err);
       });
   };
+
   return (
     <div class='h-screen mt-10'>
       <h1 class='text-center text-pink font-semibold text-2xl mb-5'>Business Registration</h1>
@@ -109,6 +148,22 @@ const Company = () => {
             }}
           ></textarea>
         </div>
+        <div>
+          <input
+            type="text"
+            value={address}
+            onChange={handleAddressChange}
+            placeholder="Enter address..."
+          />
+          <button onClick={geocodeAddress}>Get Latitude and Longitude</button>
+          {latitude && longitude && (
+            <div>
+              <p>Latitude: {latitude}</p>
+              <p>Longitude: {longitude}</p>
+            </div>
+          )}
+        </div>
+
         <div style={{ textAlign: "center", margin: "35px" }}>
           <button
             style={{

@@ -6,6 +6,7 @@ import { useParams } from "react-router";
 const CompanyHome = () => {
   const [company, setCompany] = useState([]);
   const { id } = useParams();
+
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/companys/" + id)
