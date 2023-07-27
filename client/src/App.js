@@ -1,4 +1,6 @@
 import React from "react";
+import * as Flowbite from 'flowbite';
+import Navbar from "./Components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Welcome from "./Components/Welcome";
 import Intro from "./Components/Intro";
@@ -6,35 +8,21 @@ import User from "./Components/User";
 import Company from "./Components/Company";
 import CompanyHome from "./Components/CompanyHome";
 import UserHome from "./Components/UserHome";
-import night2 from "./night2.png";
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Gruppo&display=swap');
-</style>;
+import BtmNavBar from "./Components/BtmNavBar";
+
 
 function App() {
+  //   colors: {
+  //     blue: '#1B0757',//Federal Blue
+  //     pink: '#DF2287',//Mexican Pink
+  //     purple: '#6600A9',//Grape
+  //     gray: '#2B2B2B',//Jet
+  //     indigo: '#06BCC1',//Robin Egg Blue
   return (
-    <div
-      style={{
-        position: "sticky",
-        backgroundColor: "#212121",
-        border: "8px solid #fe2d8c",
-        borderRadius: "66px",
-        padding: "10px",
-        height: "834px",
-      }}
-    >
-      <div style={{ height: "65px" }}>
-        <img
-          style={{
-            width: "20%",
-            position: "absolute",
-            top: "20px",
-          }}
-          src={night2}
-        ></img>
-      </div>
+    <div className='bg-gray'>
+      <Navbar />
       <Router>
-        <hr style={{ borderColor: "#fe2d8c" }}></hr>
+        <BtmNavBar />
         <Routes>
           <Route path="/intro" element={<Intro />}></Route>
           <Route path="/home" element={<Welcome />}></Route>

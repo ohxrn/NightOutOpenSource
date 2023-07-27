@@ -29,7 +29,7 @@ const User = () => {
       });
   };
   return (
-    <div>
+    <div class='h-screen'>
       <form onSubmit={handleForm}>
         <div style={{ textAlign: "center", marginTop: "85px" }}>
           <h2
@@ -47,7 +47,7 @@ const User = () => {
               width: "80%",
               height: "45px",
               border: "2px solid #fe2d8c",
-              backgroundColor: "#212121",
+              backgroundColor: "#2B2B2B",
               fontFamily: "'Righteous'",
               fontSize: "2rem",
               color: "#fe2d8c",
@@ -77,7 +77,7 @@ const User = () => {
               width: "80%",
               height: "45px",
               border: "2px solid #fe2d8c",
-              backgroundColor: "#212121",
+              backgroundColor: "#2B2B2B",
               fontFamily: "'Righteous'",
               fontSize: "2rem",
               color: "#fe2d8c",
@@ -107,7 +107,7 @@ const User = () => {
               width: "80%",
               height: "45px",
               border: "2px solid #fe2d8c",
-              backgroundColor: "#212121",
+              backgroundColor: "#2B2B2B",
               fontFamily: "'Righteous'",
               fontSize: "1.5rem",
               color: "#fe2d8c",
@@ -132,7 +132,7 @@ const User = () => {
               marginTop: "75px",
               width: "85%",
               height: "75px",
-              backgroundColor: "#212121",
+              backgroundColor: "#2B2B2B",
               border: "10px double #fe2d8c",
               fontFamily: "'Righteous'",
               color: "#fe2d8c",
