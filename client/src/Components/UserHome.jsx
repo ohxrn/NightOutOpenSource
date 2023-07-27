@@ -14,6 +14,10 @@ const UserHome = () => {
   const [selected] = useState([]);
   const [update, setUpdate] = useState([]);
   const [adapter, setAdapter] = useState();
+  const [distance, setDistance] = useState("");
+
+  const [companyLat, setCompanyLat] = useState("");
+  const [companyLon, setCompanyLon] = useState("");
 
   //GEOTRACK CONTENT-----------------
   const [longitude, setLongitude] = useState();
@@ -23,8 +27,8 @@ const UserHome = () => {
       .get("http://localhost:8000/api/companys")
       .then((serverResponse) => {
         // console.log(
-        //   "THIS IS WHAT WERE ARE GETTING BACK",
-        //   serverResponse.data.Companys
+        // "THIS IS WHAT WERE ARE GETTING BACK",
+        // serverResponse.data.Companys
         // );
         setFilteredComp(serverResponse.data.Companys);
         // console.log("THIS IS COMPARED LAT", serverResponse.data.Companys[0]);
@@ -219,104 +223,56 @@ const UserHome = () => {
         }}
         // value={final}
         // onChange={(e) => {
-        //   setFinalComp(e);
+        // setFinalComp(e);
         // }}
-        >
-          <option value=""></option>
-          <option value="Clubs">Clubs</option>
-          <option value="Bars">Bars</option>
-          <option value="Restaraunts">Restaraunts</option>
-          <option value="Other">Other</option>
-        </select>
-        <h2
-          style={{
-            margin: "10px",
-            padding: "0",
-            fontFamily: "'Righteous'",
-            color: "#fe2d8c",
-            textAlign: "center",
-          }}
-        >
-          {context}
-        </h2>
-        <div style={{ overflow: "auto" }}>
-          {nextComp.map((single, key) => {
-            return (
+      >
+        <option value=""></option>
+        <option value="Clubs">Clubs</option>
+        <option value="Bars">Bars</option>
+        <option value="Restaraunts">Restaraunts</option>
+        <option value="Other">Other</option>
+      </select>
+      <h2
+        style={{
+          margin: "10px",
+          padding: "0",
+          fontFamily: "'Righteous'",
+          color: "#fe2d8c",
+          textAlign: "center",
+        }}
+      >
+        {context}
+      </h2>
+      <div style={{ overflow: "auto" }}>
+        {nextComp.map((single, key) => {
+          return (
+            <div
+              style={{
+                border: "3px solid white",
+                borderRadius: "10px",
+                marginBottom: "20px",
+                marginRight: "5px",
+                marginLeft: "5px",
+                display: "flex",
+                overflow: "auto",
+              }}
+              key={key}
+            >
               <div
                 style={{
-                  border: "3px solid white",
-                  borderRadius: "10px",
-                  marginBottom: "20px",
-                  marginRight: "5px",
-                  marginLeft: "5px",
-                  display: "flex",
-                  overflow: "auto",
+                  height: "90px",
+                  width: "130px",
+                  backgroundColor: "#212121",
+                  border: "5px solid black",
                 }}
-                key={key}
               >
-                <div
+                <img
                   style={{
-                    height: "90px",
-                    width: "130px",
-                    backgroundColor: "#2B2B2B",
-                    border: "5px solid black",
+                    width: "100%",
+                    margin: "0 auto",
+                    height: "80px",
+                    opacity: "50%",
                   }}
-                >
-                  <img
-                    style={{
-                      width: "100%",
-                      margin: "0 auto",
-                      height: "80px",
-                      opacity: "50%",
-                    }}
-                    src={Screenshot}
-                  ></img>
-                </div>
-                <div style={{ display: "flex" }}>
-                  <div>
-                    <h1
-                      style={{
-                        margin: "0px",
-                        padding: "0px",
-                        margin: "10px",
-                        fontFamily: "'Righteous'",
-                        color: "#fe2d8c",
-                      }}
-                    >
-                      {single.businessName}
-                    </h1>
-                    <p
-                      style={{
-                        margin: "0px",
-                        padding: "0px",
-                        margin: "0px",
-                        padding: "0px",
-                        margin: "10px",
-                        fontFamily: "'Righteous'",
-                        color: "white",
-                        width: "100px",
-                        fontSize: ".7rem",
-                      }}
-                    >
-                      {single.description}
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      style={{
-                        margin: "0px",
-                        padding: "0px",
-                        margin: "0px",
-                        padding: "0px",
-                        margin: "10px",
-                        fontFamily: "'Righteous'",
-                        color: "limegreen",
-                      }}
-                    >
-                      {console.log("this is length", nextComp.length)}
-                      <div>
-                        <div style={{ display: "flex" }}>
-                          {single.likes <= 0.6 * (adapter / nextComp.length) ? (
                   src={Screenshot}
                   alt="this is an img"
                 ></img>
@@ -477,126 +433,6 @@ const UserHome = () => {
                                 backgroundColor: "green",
                               }}
                             ></div>
-                          ) : single.likes < 0.8 * (adapter / nextComp.length) &&
-                            single.likes > 0.6 * (adapter / nextComp.length) ? (
-                            <div style={{ display: "flex", gap: "3px" }}>
-                              <div
-                                style={{
-                                  width: "15px",
-                                  height: "5px",
-                                  backgroundColor: "green",
-                                }}
-                              ></div>
-                              <div
-                                style={{
-                                  width: "15px",
-                                  height: "5px",
-                                  backgroundColor: "green",
-                                }}
-                              ></div>
-                            </div>
-                          ) : single.likes < adapter / nextComp.length &&
-                            single.likes > 0.8 * (adapter / nextComp.length) ? (
-                            <div style={{ display: "flex", gap: "3px" }}>
-                              <div
-                                style={{
-                                  width: "15px",
-                                  height: "5px",
-                                  backgroundColor: "green",
-                                }}
-                              ></div>
-                              <div
-                                style={{
-                                  width: "15px",
-                                  height: "5px",
-                                  backgroundColor: "green",
-                                }}
-                              ></div>
-                              <div
-                                style={{
-                                  width: "15px",
-                                  height: "5px",
-                                  backgroundColor: "green",
-                                }}
-                              ></div>
-                            </div>
-                          ) : single.likes < 1.3 * (adapter / nextComp.length) &&
-                            single.likes > 1 * (adapter / nextComp.length) ? (
-                            <div style={{ display: "flex", gap: "3px" }}>
-                              <div
-                                style={{
-                                  width: "15px",
-                                  height: "5px",
-                                  backgroundColor: "green",
-                                }}
-                              ></div>
-                              <div
-                                style={{
-                                  width: "15px",
-                                  height: "5px",
-                                  backgroundColor: "green",
-                                }}
-                              ></div>
-                              <div
-                                style={{
-                                  width: "15px",
-                                  height: "5px",
-                                  backgroundColor: "green",
-                                }}
-                              ></div>
-                              <div
-                                style={{
-                                  width: "15px",
-                                  height: "5px",
-                                  backgroundColor: "green",
-                                }}
-                              ></div>
-                            </div>
-                          ) : single.likes > 1.3 * (adapter / nextComp.length) ? (
-                            <div style={{ display: "flex", gap: "3px" }}>
-                              <div
-                                style={{
-                                  width: "15px",
-                                  height: "5px",
-                                  backgroundColor: "green",
-                                }}
-                              ></div>
-                              <div
-                                style={{
-                                  width: "15px",
-                                  height: "5px",
-                                  backgroundColor: "green",
-                                }}
-                              ></div>
-                              <div
-                                style={{
-                                  width: "15px",
-                                  height: "5px",
-                                  backgroundColor: "green",
-                                }}
-                              ></div>
-                              <div
-                                style={{
-                                  width: "15px",
-                                  height: "5px",
-                                  backgroundColor: "green",
-                                }}
-                              ></div>
-                              <div
-                                style={{
-                                  width: "15px",
-                                  height: "5px",
-                                  backgroundColor: "green",
-                                }}
-                              ></div>
-                            </div>
-                          ) : (
-                            <h1></h1>
-                          )}
-                        </div>
-                      </div>
-                      {single.likes} Users
-                    </p>
                           </div>
                         ) : (
                           <></>
@@ -605,30 +441,30 @@ const UserHome = () => {
                     </div>
                     {single.likes} Users
                   </h2>
-                    <label
-                      style={{ fontFamily: "'Righteous'", color: "limegreen" }}
+
+                  <label
+                    style={{ fontFamily: "'Righteous'", color: "limegreen" }}
+                  >
+                    <button
+                      style={{
+                        fontFamily: "'Righteous'",
+                        color: "#fe2d8c",
+                        backgroundColor: "#212121",
+                        border: "2px solid limegreen",
+                        margin: "5px",
+                      }}
+                      onClick={() => {
+                        handleButton(single);
+                      }}
                     >
-                      <button
-                        style={{
-                          fontFamily: "'Righteous'",
-                          color: "#fe2d8c",
-                          backgroundColor: "#2B2B2B",
-                          border: "2px solid limegreen",
-                          margin: "5px",
-                        }}
-                        onClick={() => {
-                          handleButton(single);
-                        }}
-                      >
-                        I'm interested in this spot.
-                      </button>
-                    </label>
-                  </div>
+                      I'm interested in this spot.
+                    </button>
+                  </label>
                 </div>
               </div>
-            );
-          })}
-        </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
