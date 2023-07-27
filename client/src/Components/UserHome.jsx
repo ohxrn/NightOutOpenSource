@@ -14,7 +14,6 @@ const UserHome = () => {
   const [selected] = useState([]);
   const [update, setUpdate] = useState([]);
   const [adapter, setAdapter] = useState();
-  const [distance, setDistance] = useState("");
 
   //GEOTRACK CONTENT-----------------
   const [longitude, setLongitude] = useState();
