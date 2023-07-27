@@ -16,9 +16,6 @@ const UserHome = () => {
   const [adapter, setAdapter] = useState();
   const [distance, setDistance] = useState("");
 
-  const [companyLat, setCompanyLat] = useState("");
-  const [companyLon, setCompanyLon] = useState("");
-
   //GEOTRACK CONTENT-----------------
   const [longitude, setLongitude] = useState();
   const [latitude, setLatitude] = useState();
