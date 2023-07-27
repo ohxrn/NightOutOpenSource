@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from 'flowbite-react';
+import { Button } from "flowbite-react";
 import User from "./User";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom";
 const Intro = () => {
   const nav = useNavigate();
   return (
-    <div class='h-screen'>
-      <h1 class='text-center mt-10 text-pink text-xl'>
+    <div className="h-screen">
+      <h1 className="text-center mt-10 text-pink text-xl">
         Let's find a good fit for you here.
       </h1>
       <div style={{ textAlign: "center" }}>
