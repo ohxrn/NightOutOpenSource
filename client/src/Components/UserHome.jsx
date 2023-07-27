@@ -14,6 +14,7 @@ const UserHome = () => {
   const [selected] = useState([]);
   const [update, setUpdate] = useState([]);
   const [adapter, setAdapter] = useState();
+  const [distance, setDistance] = useState("");
 
   const [companyLat, setCompanyLat] = useState("");
   const [companyLon, setCompanyLon] = useState("");
@@ -25,21 +26,31 @@ const UserHome = () => {
     axios
       .get("http://localhost:8000/api/companys")
       .then((serverResponse) => {
-        console.log(
-          "THIS IS WHAT WERE ARE GETTING BACK",
-          serverResponse.data.Companys
-        );
+        // console.log(
+        //   "THIS IS WHAT WERE ARE GETTING BACK",
+        //   serverResponse.data.Companys
+        // );
         setFilteredComp(serverResponse.data.Companys);
-        console.log("THIS IS COMPARED LAT", serverResponse.data.Companys[0]);
-        setCompanyLat(serverResponse.data.Companys[0].latitude);
-        setCompanyLon(serverResponse.data.Companys[0].longitude);
+        // console.log("THIS IS COMPARED LAT", serverResponse.data.Companys[0]);
       })
       .catch((err) => {
         console.log("this is the error", err);
       });
   }, []);
-  console.log("this is longitude", companyLon);
-  console.log("this is latitude", companyLat);
+  const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    const earthRadius = 3958.8; // Radius of the Earth in miles
+    const lat1Rad = (lat1 * Math.PI) / 180;
+    const lon1Rad = (lon1 * Math.PI) / 180;
+    const lat2Rad = (lat2 * Math.PI) / 180;
+    const lon2Rad = (lon2 * Math.PI) / 180;
+    const latDiff = lat2Rad - lat1Rad;
+    const lonDiff = lon2Rad - lon1Rad;
+    const a =
+      Math.sin(latDiff / 2) ** 2 +
+      Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.sin(lonDiff / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return earthRadius * c; // Return the calculated distance
+  };
 
   //--------------------PING LOCATION ALGORITHM--------------------------------------------
   const fetchGeolocation = () => {
@@ -47,6 +58,22 @@ const UserHome = () => {
       console.log("PINGED!---------HERE'S LOCATION", position.coords);
       setLongitude(position.coords.longitude);
       setLatitude(position.coords.latitude);
+
+      // Calculate distances for each company
+      filteredComp.forEach((company) => {
+        const distance = calculateDistance(
+          lattitude,
+          longitude,
+          company.latitude,
+          company.longitude
+        );
+        console.log("THIS IS DISTANCE", distance, "for", company.businessName);
+        if (distance < 5) {
+          console.log("BELOW FIVE MILES FOR", company.businessName);
+        } else {
+          console.log("NOT BELOW 5", company.businessName);
+        }
+      });
     });
   };
 
@@ -57,7 +84,7 @@ const UserHome = () => {
 
     // Clean up the interval when the component unmounts
     return () => clearInterval(intervalId);
-  }, []);
+  }, [filteredComp]);
   //--------------------------------------------------------------------------------------
   //
   //
@@ -66,28 +93,6 @@ const UserHome = () => {
   //
   //------------------LOCATION CALCULATION------------------------------------------------
 
-  const calculateDistance = (lat1, lon1, lat2, lon2) => {
-    const earthRadius = 3958.8; // Radius of the Earth in miles
-    const lat1Rad = (lat1 * Math.PI) / 180;
-    const lon1Rad = (lon1 * Math.PI) / 180;
-    const lat2Rad = (lat2 * Math.PI) / 180;
-    const lon2Rad = (lon2 * Math.PI) / 180;
-    //-----------------------------------------
-    const latDiff = lat2Rad - lat1Rad;
-    const lonDiff = lon2Rad - lon1Rad;
-    //----------------------------------------
-    const a =
-      Math.sin(latDiff / 2) ** 2 +
-      Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.sin(lonDiff / 2) ** 2;
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const distance = earthRadius * c;
-
-    console.log("This is the distance to destination,", distance, "miles");
-
-    return distance; // Distance in miles
-  };
-
-  calculateDistance(lattitude, longitude, companyLat, companyLon);
   //
   //
   //
