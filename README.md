@@ -8,11 +8,9 @@
 <img width="188" alt="5" src="https://github.com/ohxrn/NightOutOpenSource/assets/79466519/de2f7f3d-5b77-425e-a9f5-d9ce8ff3fe16">
 <img width="188" alt="4" src="https://github.com/ohxrn/NightOutOpenSource/assets/79466519/5cf9011e-7135-4ec5-b645-1c9b3a0921a3">
 
-<i>This is the open source version of Night Out</i>
+<i>A MERN (MongoDB, Express, React, Node) stack development.</i>
 
 ---
-
-A MERN (MongoDB, Express, React, Node) stack development.
 
 ## Table of Contents
 
