@@ -16,8 +16,8 @@ A MERN (MongoDB, Express, React, Node) stack development.
 
 ## Table of Contents
 
-- [Requirements](https://github.com/jasonyaj/NightOutOpenSource#requirement)
-- [How to Set Up and Run Night Out](https://github.com/jasonyaj/NightOutOpenSource#how-set-up-and-run-night-out)
+- [Requirements](https://github.com/jasonyaj/NightOutOpenSource#requirements)
+- [How to Set Up and Run Night Out](https://github.com/jasonyaj/NightOutOpenSource#how-to-set-up-and-run-night-out)
   - [Client Side Dependency Install](https://github.com/jasonyaj/NightOutOpenSource#client-side-dependency-install)
   - [Server Side Dependency Install](https://github.com/jasonyaj/NightOutOpenSource#server-side-dependency-install)
   - [Running the Application](https://github.com/jasonyaj/NightOutOpenSource#running-the-application)
