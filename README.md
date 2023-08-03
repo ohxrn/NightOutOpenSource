@@ -14,7 +14,15 @@
 
 A MERN (MongoDB, Express, React, Node) stack development.
 
-## Requirement
+## Table of Contents
+
+- [Requirements](https://github.com/jasonyaj/NightOutOpenSource#requirement)
+- [How to Set Up and Run Night Out](https://github.com/jasonyaj/NightOutOpenSource#how-set-up-and-run-night-out)
+  - [Client Side Dependency Install](https://github.com/jasonyaj/NightOutOpenSource#client-side-dependency-install)
+  - [Server Side Dependency Install](https://github.com/jasonyaj/NightOutOpenSource#server-side-dependency-install)
+  - [Running the Application](https://github.com/jasonyaj/NightOutOpenSource#running-the-application)
+
+## Requirements
 
 Install Node.
 
@@ -22,9 +30,9 @@ Install Node.
 
 MongoDB Atlas account
 
-- At this time a MongoDB Atlas account with the <i>night</i>> database is provided. Connection will be made using mongoose on local port 8000.
+- At this time a MongoDB Atlas account with the <i>night</i> database is provided. Connection will be made using mongoose on local port 8000.
 
-## How Set Up and Run Night Out
+## How to Set Up and Run Night Out
 
 After cloning a copy to your PC follow these steps using a terminal.
 
@@ -69,3 +77,5 @@ or
 ```
 http://127.0.0.1:3000/
 ```
+
+[Return to Table of Contents](https://github.com/jasonyaj/NightOutOpenSource#table-of-contents)
