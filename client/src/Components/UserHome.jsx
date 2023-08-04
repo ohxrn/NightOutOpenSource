@@ -70,7 +70,7 @@ const UserHome = () => {
           navigator.geolocation.getCurrentPosition(resolve, reject);
         });
 
-        console.log("PINGED!---------HERE'S LOCATION", position.coords);
+        console.log("PINGED!---------HERE'S The LOCATION", position.coords);
         setLongitude(position.coords.longitude);
         setLatitude(position.coords.latitude);
       } catch (error) {
