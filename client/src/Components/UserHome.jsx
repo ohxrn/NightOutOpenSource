@@ -54,7 +54,13 @@ const UserHome = () => {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return earthRadius * c; // Return the calculated distance
   };
-
+  useEffect(() => {
+    return () => {
+      setLegit([]);
+      setReal([]);
+      setTheDistance([]);
+    };
+  }, []);
   //--------------------PING LOCATION ALGORITHM--------------------------------------------
 
   useEffect(() => {
