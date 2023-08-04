@@ -8,6 +8,9 @@ import Screenshot from "../Screenshot 2023-05-24 at 3.47.16 PM.png";
 
 const UserHome = () => {
   const { context } = useParams();
+  const [legit, setLegit] = useState([]);
+  const [real, setReal] = useState([]);
+  const [theDistance, setTheDistance] = useState();
   const [filteredComp, setFilteredComp] = useState([]);
   const [nextComp, setComp] = useState([]);
   const [socket] = useState(() => io(":8000"));
@@ -70,7 +73,7 @@ const UserHome = () => {
     };
 
     fetchGeolocation();
-    const intervalId = setInterval(fetchGeolocation, 7000);
+    const intervalId = setInterval(fetchGeolocation, 5000);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -88,25 +91,33 @@ const UserHome = () => {
         )
       );
 
-      distances.forEach((distance, index) => {
-        const company = filteredComp[index];
+      const distancesBelowFiveMiles = [];
+      const allDistances = [];
+      filteredComp.forEach((company, index) => {
+        const distance = distances[index];
         console.log("THIS IS DISTANCE", distance, "for", company.businessName);
         if (distance < 5) {
           console.log("BELOW FIVE MILES FOR", company.businessName);
-        } else {
-          console.log("NOT BELOW 5", company.businessName);
+          distancesBelowFiveMiles.push(distance);
         }
+        allDistances.push(distance);
       });
+
+      setTheDistance(distancesBelowFiveMiles);
+      setReal(allDistances);
     };
 
     calculateDistances();
   }, [latitude, longitude, filteredComp]);
-  //--------------------------------------------------------------------------------------
-  //
-  //
-  //
-  //
-  //
+
+  useEffect(
+    (geek) => {
+      setLegit(real);
+      console.log("this is the finished distances", legit);
+    },
+    [calculateDistance]
+  );
+
   //------------------LOCATION CALCULATION------------------------------------------------
 
   //
@@ -245,6 +256,7 @@ const UserHome = () => {
       </h2>
       <div style={{ overflow: "auto" }}>
         {nextComp.map((single, key) => {
+          const legitValue = legit.length > key ? legit[key] : 0;
           return (
             <div
               style={{
@@ -258,6 +270,7 @@ const UserHome = () => {
               }}
               key={key}
             >
+              {legitValue}
               <div
                 style={{
                   height: "90px",

@@ -18,7 +18,7 @@ const BtmNavBar = () => {
               New Places
             </Link>
             <Link
-              to="/poppin"
+              to="/userForm"
               type="button"
               className="px-5 py-1.5 font-bold text-indigo hover:text-gray hover:bg-indigo rounded-lg"
             >
